@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Bank Archive | UniAid</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #020617; display: flex; overflow-x: hidden; }
+        .glass-card { 
+            background: rgba(15, 23, 42, 0.4); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            backdrop-blur-xl; 
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-5px);
+            background: rgba(30, 41, 59, 0.6);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        /* Custom scrollbar for better look */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+    </style>
+</head>
+<body class="text-slate-300 min-h-screen">
+
+    <aside class="w-64 flex flex-col border-r border-slate-800 bg-slate-900/50 backdrop-blur-xl sticky top-0 h-screen flex-shrink-0">
+        <div class="p-8 text-2xl font-black text-white border-b border-slate-800">
+            Uni<span class="text-blue-500 font-extrabold text-3xl">Aid</span>
+        </div>
+        <nav class="flex-grow p-5 space-y-3 mt-4">
+            <a href="dashboard.html"
+                class="flex items-center gap-3 p-3 rounded-xl text-slate-500 hover:text-white transition">
+                <span class="text-lg">🏠</span> Dashboard
+            </a>
+            <a href="eligibility.html"
+                class="flex items-center gap-3 p-3 rounded-xl text-slate-500 hover:text-white transition">
+                <span class="text-lg">🔍</span> Eligibility Checker
+            </a>
+            <a href="calender.html" 
+                class="flex items-center gap-3 p-3 rounded-xl text-slate-500 hover:text-white transition">
+                <span class="text-lg">📅</span> Admission Calendar
+            </a>
+            <a href="my_application.html" 
+                class="flex items-center gap-3 p-3 rounded-xl text-slate-500 hover:text-white transition">
+                <span class="text-lg">📝</span> My Applications
+            </a>
+            <a href="questions.html" 
+                class="flex items-center gap-3 p-3 rounded-xl bg-blue-600/20 text-white border-l-4 border-blue-500 shadow-[inset_0_0_20px_rgba(59,130,246,0.2)] font-bold">
+                <span class="text-lg">📚</span> Question Bank
+            </a>
+        </nav>
+        <div class="p-6 border-t border-slate-800 text-center">
+            <a href="index.html" class="text-red-400 font-bold text-sm hover:underline">Log Out</a>
+        </div>
+    </aside>
+
+    <div class="max-w-7xl mx-auto p-4 md:p-12 flex-grow overflow-y-auto">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4 bg-slate-900/40 p-4 rounded-2xl border border-slate-800 backdrop-blur-md">
+    <div class="relative w-full md:w-96">
+        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        </span>
+        <input type="text" placeholder="Search for universities, exams..." class="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-sm focus:border-blue-500 outline-none transition text-white">
+    </div>
+    
+    <div class="flex items-center gap-6">
+        <div class="flex items-center gap-4">
+            <button onclick="toggleTheme()" class="p-2.5 rounded-xl bg-slate-900/50 border border-slate-700 text-slate-400 hover:text-white transition-all">
+                <svg id="theme-moon" class="h-5 w-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                <svg id="theme-sun" class="h-5 w-5 hidden dark:block text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707.707M12 8a4 4 0 100 8 4 4 0 000-8z" /></svg>
+            </button>
+            <button class="relative text-slate-400 hover:text-white transition">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                <span class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full border-2 border-slate-900"></span>
+            </button>
+        </div>
+        <div class="h-8 w-[1px] bg-slate-800 hidden md:block"></div>
+        <a href="profile.html" class="flex items-center gap-3">
+            <div class="text-right hidden md:block">
+                <p class="text-xs font-black text-white leading-none">Shakil Ahmed</p>
+                <p class="text-[10px] text-blue-500 font-bold uppercase tracking-tighter mt-1">Gold Member</p>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center font-black text-white border-2 border-blue-400/20">S</div>
+        </a>
+    </div>
+</header>
+        <div class="mb-16 border-b border-slate-900 pb-8">
+             <h1 class="text-5xl font-black text-white italic uppercase tracking-tighter">UniAid <span class="text-blue-500 underline decoration-4 underline-offset-8">Archives</span></h1>
+             <p class="text-slate-500 text-[10px] font-bold uppercase tracking-[0.5em] mt-4">Total Admission Solution • RUET 2026</p>
+        </div>
+
+        <div class="mb-24">
+            <div class="flex items-center gap-6 mb-10">
+                <h2 class="text-4xl font-black text-blue-500 uppercase tracking-tighter">SCIENCE <span class="text-slate-700">ZONE</span></h2>
+                <div class="h-[2px] flex-grow bg-gradient-to-r from-blue-500/50 to-transparent"></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-card p-6 rounded-3xl border-l-4 border-blue-500">
+                    <h3 class="text-white font-black mb-4">BUET</h3>
+                    <button class="w-full py-2 bg-blue-600 text-[9px] font-black uppercase rounded-lg">Get PDF</button>
+                </div>
+                <div class="glass-card p-6 rounded-3xl border-l-4 border-blue-500">
+                    <h3 class="text-white font-black mb-4">RUET</h3>
+                    <button class="w-full py-2 bg-slate-800 text-[9px] font-black uppercase rounded-lg hover:bg-blue-600">Get PDF</button>
+                </div>
+                <div class="glass-card p-6 rounded-3xl border-l-4 border-blue-500">
+                    <h3 class="text-white font-black mb-4">KUET</h3>
+                    <button class="w-full py-2 bg-slate-800 text-[9px] font-black uppercase rounded-lg hover:bg-blue-600">Get PDF</button>
+                </div>
+                <div class="glass-card p-6 rounded-3xl border-l-4 border-blue-500">
+                    <h3 class="text-white font-black mb-4">CUET</h3>
+                    <button class="w-full py-2 bg-slate-800 text-[9px] font-black uppercase rounded-lg hover:bg-blue-600">Get PDF</button>
+                </div>
+                <div class="glass-card p-6 rounded-3xl">
+                    <h3 class="text-slate-400 font-black mb-4 uppercase text-sm">RU Science</h3>
+                    <button class="w-full py-2 bg-slate-800 text-[9px] font-black uppercase rounded-lg">Download</button>
+                </div>
+                <div class="glass-card p-6 rounded-3xl">
+                    <h3 class="text-slate-400 font-black mb-4 uppercase text-sm">CU Science</h3>
+                    <button class="w-full py-2 bg-slate-800 text-[9px] font-black uppercase rounded-lg">Download</button>
+                </div>
+                <div class="glass-card p-6 rounded-3xl">
+                    <h3 class="text-slate-400 font-black mb-4 uppercase text-sm">KU Science</h3>
+                    <button class="w-full py-2 bg-slate-800 text-[9px] font-black uppercase rounded-lg">Download</button>
+                </div>
+                <div class="glass-card p-6 rounded-3xl border-2 border-rose-500/20">
+                    <h3 class="text-rose-500 font-black mb-4 uppercase">Medical (MBBS)</h3>
+                    <button class="w-full py-2 bg-rose-600 text-[9px] font-black uppercase rounded-lg">Get PDF</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-24">
+            <div class="flex items-center gap-6 mb-10">
+                <h2 class="text-4xl font-black text-emerald-500 uppercase tracking-tighter">ARTS <span class="text-slate-700">ZONE</span></h2>
+                <div class="h-[2px] flex-grow bg-gradient-to-r from-emerald-500/50 to-transparent"></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-card p-6 rounded-3xl border-l-4 border-emerald-500">
+                    <h3 class="text-white font-black mb-4">DU (B-UNIT)</h3>
+                    <button class="w-full py-2 bg-emerald-600 text-[9px] font-black uppercase rounded-lg">Get PDF</button>
+                </div>
+                <div class="glass-card p-6 rounded-3xl border-l-4 border-emerald-500">
+                    <h3 class="text-white font-black mb-4">RU (B-UNIT)</h3>
+                    <button class="w-full py-2 bg-slate-800 text-[9px] font-black uppercase rounded-lg hover:bg-emerald-600">Get PDF</button>
+                </div>
+                <div class="glass-card p-6 rounded-3xl border-l-4 border-emerald-500">
+                    <h3 class="text-white font-black mb-4">CU (B-UNIT)</h3>
+                    <button class="w-full py-2 bg-slate-800 text-[9px] font-black uppercase rounded-lg hover:bg-emerald-600">Get PDF</button>
+                </div>
+                <div class="glass-card p-6 rounded-3xl border-l-4 border-emerald-500">
+                    <h3 class="text-white font-black mb-4">KU (B-UNIT)</h3>
+                    <button class="w-full py-2 bg-slate-800 text-[9px] font-black uppercase rounded-lg hover:bg-emerald-600">Get PDF</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-24">
+            <div class="flex items-center gap-6 mb-10">
+                <h2 class="text-4xl font-black text-amber-500 uppercase tracking-tighter">COMMERCE <span class="text-slate-700">ZONE</span></h2>
+                <div class="h-[2px] flex-grow bg-gradient-to-r from-amber-500/50 to-transparent"></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-card p-6 rounded-3xl border-l-4 border-amber-500">
+                    <h3 class="text-white font-black mb-4">DU (C-UNIT)</h3>
+                    <button class="w-full py-2 bg-amber-600 text-[9px] font-black uppercase rounded-lg">Get PDF</button>
+                </div>
+                <div class="glass-card p-6 rounded-3xl border-l-4 border-amber-500">
+                    <h3 class="text-white font-black mb-4">RU (C-UNIT)</h3>
+                    <button class="w-full py-2 bg-slate-800 text-[9px] font-black uppercase rounded-lg hover:bg-amber-600">Get PDF</button>
+                </div>
+                <div class="glass-card p-6 rounded-3xl border-l-4 border-amber-500">
+                    <h3 class="text-white font-black mb-4">CU (C-UNIT)</h3>
+                    <button class="w-full py-2 bg-slate-800 text-[9px] font-black uppercase rounded-lg hover:bg-amber-600">Get PDF</button>
+                </div>
+                <div class="glass-card p-6 rounded-3xl border-l-4 border-amber-500">
+                    <h3 class="text-white font-black mb-4">KU (C-UNIT)</h3>
+                    <button class="w-full py-2 bg-slate-800 text-[9px] font-black uppercase rounded-lg hover:bg-amber-600">Get PDF</button>
+                </div>
+            </div>
+        </div>
+
+       <footer class="mt-20 border-t border-slate-800 pt-10 pb-6 text-center">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-8 text-left">
+                <div class="max-w-xs">
+                    <h3 class="text-lg font-black text-white mb-2">UniAid <span class="text-blue-500">BD</span></h3>
+                    <p class="text-xs text-slate-500 leading-relaxed">The ultimate admission companion for Bangladeshi
+                        students. Automating your journey from form fill-up to final result.</p>
+                </div>
+                <div class="flex gap-10">
+                    <div>
+                        <h4 class="text-xs font-black text-white uppercase mb-3 tracking-widest">Navigation</h4>
+                        <ul class="text-[10px] text-slate-500 space-y-2 uppercase font-bold">
+                            <li><a href="#" class="hover:text-blue-500">Support</a></li>
+                            <li><a href="#" class="hover:text-blue-500">Policy</a></li>
+                        </ul>
+                    </div>
+                    <div class="text-right">
+                        <h4 class="text-xs font-black text-white uppercase mb-3 tracking-widest">Contact</h4>
+                        <p class="text-[10px] text-slate-500 uppercase font-bold">support@uniaid.com.bd</p>
+                    </div>
+                </div>
+            </div>
+            <p class="text-[10px] text-slate-600 font-bold uppercase tracking-[0.3em] border-t border-slate-900 pt-6">©
+                2026 UniAid BD • Engineered for Success</p>
+        </footer> 
+    </div>
+
+</body>
+</html>
