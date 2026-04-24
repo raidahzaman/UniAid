@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | UniAid</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; }
+        .sidebar { background-color: #1e293b; }
+        .stat-card { background: #1e293b; border: 1px solid #334155; transition: 0.3s; }
+        .stat-card:hover { border-color: #3b82f6; }
+    </style>
+</head>
+<body class="text-slate-200 flex h-screen overflow-hidden">
+
+    <aside class="w-64 sidebar hidden md:flex flex-col border-r border-slate-700">
+        <div class="p-6 text-xl font-bold text-white border-b border-slate-700">
+            Uni<span class="text-blue-500">Aid</span>
+        </div>
+        <nav class="flex-grow p-4 space-y-2 mt-4">
+            <a href="#" class="block p-3 rounded-lg bg-blue-600 text-white font-medium">Dashboard</a>
+            <a href="eligibility.html" class="block p-3 rounded-lg text-slate-400 hover:bg-slate-800 transition">Eligibility Checker</a>
+            <a href="calender.html" class="block p-3 rounded-lg text-slate-400 hover:bg-slate-800 transition">Admission Calendar</a>
+            <a href="#" class="block p-3 rounded-lg text-slate-400 hover:bg-slate-800 transition">My Applications</a>
+            <a href="#" class="block p-3 rounded-lg text-slate-400 hover:bg-slate-800 transition">GPA Calculators</a>
+        </nav>
+        <div class="p-4 border-t border-slate-700">
+            <a href="index.html" class="text-red-400 text-sm hover:underline">Log Out</a>
+        </div>
+    </aside>
+
+    <main class="flex-grow overflow-y-auto p-8">
+       <header class="flex flex-col items-center justify-center mb-10 text-center w-full">
+    <div class="w-12 h-12 rounded-full bg-slate-700 flex items-center justify-center text-white font-bold hover:bg-slate-600 transition overflow-hidden border border-slate-500 mb-3">
+        <a href="profile.html" class="w-full h-full flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+        </a>
+    </div>
+
+    <h4 class="text-3xl font-bold text-white">Welcome back, Student!</h4>
+    <p class="text-slate-400 text-sm mt-1">Ready to find your dream university today?</p>
+</header>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="stat-card p-6 rounded-xl">
+                <p class="text-slate-400 text-sm mb-1">Eligible Universities</p>
+                <h3 class="text-3xl font-bold text-white">14</h3>
+            </div>
+            <div class="stat-card p-6 rounded-xl">
+                <p class="text-slate-400 text-sm mb-1">Active Circulars</p>
+                <h3 class="text-3xl font-bold text-white">08</h3>
+            </div>
+            <div class="stat-card p-6 rounded-xl border-l-4 border-l-blue-500">
+                <p class="text-slate-400 text-sm mb-1">Next Exam (DU 'Ka')</p>
+                <h3 class="text-3xl font-bold text-white">12 Days</h3>
+            </div>
+        </div>
+
+        <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+            <h4 class="font-semibold text-white mb-4">Urgent Notifications</h4>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between p-4 bg-slate-900 rounded-lg">
+                    <div>
+                        <p class="font-medium">BUET Preliminary Circular Published</p>
+                        <p class="text-xs text-slate-500">Oct 26, 2026 • 10:30 AM</p>
+                    </div>
+                    <button class="text-blue-400 text-sm font-semibold">View PDF</button>
+                </div>
+                <div class="flex items-center justify-between p-4 bg-slate-900 rounded-lg">
+                    <div>
+                        <p class="font-medium">Medical Result Auto-Tracker</p>
+                        <p class="text-xs text-slate-500">Enable this to get SMS alerts</p>
+                    </div>
+                    <button class="bg-blue-600 px-3 py-1 rounded text-xs text-white">Activate</button>
+                </div>
+            </div>
+        </div>
+        
+    </main>
+<script>
+function checkEligibility() {
+    const ssc = parseFloat(document.getElementById('ssc_gpa').value);
+    const hsc = parseFloat(document.getElementById('hsc_gpa').value);
+    const group = document.getElementById('student_group').value;
+    const total = ssc + hsc;
+    
+    const resultsArea = document.getElementById('eligibility-results');
+    const list = document.getElementById('results-list');
+    const statusTag = document.getElementById('status-tag');
+    
+    // Clear previous results
+    list.innerHTML = '';
+    resultsArea.classList.remove('hidden');
+    statusTag.classList.remove('hidden');
+
+    // Requirement Database (Approximate for 2026)
+    const universities = [
+        { name: "BUET", minTotal: 10.0, group: "science", color: "text-blue-400" },
+        { name: "Medical (MBBS)", minTotal: 9.0, group: "science", color: "text-red-400" },
+        { name: "Dhaka University (A Unit)", minTotal: 8.0, group: "science", color: "text-orange-400" },
+        { name: "GST Cluster", minTotal: 7.0, group: "any", color: "text-purple-400" },
+        { name: "Rajshahi University", minTotal: 7.5, group: "any", color: "text-yellow-400" },
+        { name: "CKRUET Cluster", minTotal: 10.0, group: "science", color: "text-cyan-400" }
+    ];
+
+    universities.forEach(uni => {
+        let isEligible = false;
+        
+        // Simple logic check
+        if (uni.group === "any" || uni.group === group) {
+            if (total >= uni.minTotal) {
+                isEligible = true;
+            }
+        }
+
+        if (isEligible) {
+            list.innerHTML += `
+                <div class="bg-slate-900 border border-slate-700 p-4 rounded-lg flex justify-between items-center">
+                    <div>
+                        <span class="text-xs font-bold ${uni.color}">${uni.name}</span>
+                        <p class="text-[10px] text-slate-500">Criteria Met: Total GPA ${uni.minTotal}+</p>
+                    </div>
+                    <span class="text-green-500 text-xs font-bold">✓ Eligible</span>
+                </div>
+            `;
+        }
+    });
+
+    if (list.innerHTML === '') {
+        list.innerHTML = '<p class="text-slate-500 text-sm">Sorry, no matching universities found for this GPA.</p>';
+    }
+}
+</script>
+</body>
+</html>

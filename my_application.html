@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Applications | UniAid BD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #030712;
+        }
+
+        .glow-effect {
+            background-image: radial-gradient(circle at top left, #1d4ed8 0%, transparent 20%),
+                radial-gradient(circle at bottom right, #db2777 0%, transparent 20%);
+            background-attachment: fixed;
+        }
+
+        .fancy-card {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .fancy-card:hover {
+            transform: translateY(-5px);
+            border-color: #3b82f6;
+            box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.2);
+        }
+
+        .neon-blue {
+            color: #3b82f6;
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+
+        /* Sidebar Active Link */
+        .active-nav {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid #3b82f6;
+            color: white !important;
+        }
+    </style>
+</head>
+
+<body class="text-slate-200 flex h-screen overflow-hidden glow-effect">
+
+    <aside class="w-64 flex flex-col border-r border-slate-800 bg-slate-900/50 backdrop-blur-xl">
+        <div class="p-8 text-2xl font-black text-white border-b border-slate-800">
+            Uni<span class="text-blue-500">Aid</span>
+        </div>
+        <nav class="flex-grow p-5 space-y-3 mt-4">
+            <a href="dashboard.html"
+                class="block p-3 rounded-xl text-slate-500 hover:text-white transition">Dashboard</a>
+            <a href="eligibility.html"
+                class="block p-3 rounded-xl text-slate-500 hover:text-white transition">Eligibility Checker</a>
+            <a href="calender.html" class="block p-3 rounded-xl text-slate-500 hover:text-white transition">Admission
+                Calendar</a>
+            <a href="my-applications.html" class="active-nav block p-3 rounded-xl font-bold">My Applications</a>
+            <a href="gpa.html" class="block p-3 rounded-xl text-slate-500 hover:text-white transition">GPA
+                Calculators</a>
+        </nav>
+        <div class="p-6 border-t border-slate-800">
+            <a href="index.html" class="text-red-400 font-bold text-sm hover:underline">Log Out</a>
+        </div>
+    </aside>
+
+    <main class="flex-grow overflow-y-auto p-8 md:p-12">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4 bg-slate-900/40 p-4 rounded-2xl border border-slate-800 backdrop-blur-md">
+    <div class="relative w-full md:w-96">
+        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        </span>
+        <input type="text" placeholder="Search for universities, exams..." class="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-sm focus:border-blue-500 outline-none transition text-white">
+    </div>
+    
+    <div class="flex items-center gap-6">
+        <div class="flex items-center gap-4">
+            <button onclick="toggleTheme()" class="p-2.5 rounded-xl bg-slate-900/50 border border-slate-700 text-slate-400 hover:text-white transition-all">
+                <svg id="theme-moon" class="h-5 w-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                <svg id="theme-sun" class="h-5 w-5 hidden dark:block text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707.707M12 8a4 4 0 100 8 4 4 0 000-8z" /></svg>
+            </button>
+            <button class="relative text-slate-400 hover:text-white transition">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                <span class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full border-2 border-slate-900"></span>
+            </button>
+        </div>
+        <div class="h-8 w-[1px] bg-slate-800 hidden md:block"></div>
+        <a href="profile.html" class="flex items-center gap-3">
+            <div class="text-right hidden md:block">
+                <p class="text-xs font-black text-white leading-none">Shakil Ahmed</p>
+                <p class="text-[10px] text-blue-500 font-bold uppercase tracking-tighter mt-1">Gold Member</p>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center font-black text-white border-2 border-blue-400/20">S</div>
+        </a>
+    </div>
+</header>
+        <div class="max-w-5xl mx-auto">
+
+            <header class="mb-12">
+                <h1 class="text-4xl font-black text-white tracking-tight">Mission Control: <span class="neon-blue">My
+                        Applications</span></h1>
+                <p class="text-slate-400 mt-2">Track, manage, and complete your admission journey.</p>
+            </header>
+
+            <div class="grid grid-cols-1 gap-6">
+
+                <div class="fancy-card p-6 border-l-4 border-l-orange-500">
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-14 h-14 bg-orange-500/10 rounded-2xl flex items-center justify-center text-orange-500 font-black text-xl border border-orange-500/20">
+                                DU</div>
+                            <div>
+                                <h4 class="text-white font-extrabold text-lg">Dhaka University</h4>
+                                <p class="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Unit A •
+                                    Science</p>
+                            </div>
+                        </div>
+
+                        <div class="flex-grow max-w-sm w-full px-4 text-center md:text-left">
+                            <div class="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-2">
+                                <span class="text-blue-500">Applied</span>
+                                <span class="text-blue-500">Paid</span>
+                                <span class="text-slate-600">Admit</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-blue-500" style="width: 66%"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-3">
+                            <button onclick="openAction('view', 'DU')"
+                                class="px-5 py-2 rounded-xl bg-slate-800 text-xs font-bold hover:bg-slate-700 transition">View
+                                Form</button>
+                            <button onclick="openAction('status', 'DU')"
+                                class="px-5 py-2 rounded-xl bg-blue-600 text-xs font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-900/40">Status</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fancy-card p-6 border-l-4 border-l-blue-500">
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center text-blue-500 font-black text-xl border border-blue-500/20">
+                                B</div>
+                            <div>
+                                <h4 class="text-white font-extrabold text-lg">BUET (Preliminary)</h4>
+                                <p class="text-[10px] text-green-500 uppercase font-bold tracking-widest">Exam Date: 25
+                                    May</p>
+                            </div>
+                        </div>
+
+                        <div class="flex-grow max-w-sm w-full px-4">
+                            <div
+                                class="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-2 text-blue-400">
+                                <span>Applied</span>
+                                <span>Paid</span>
+                                <span>Admit Ready</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-blue-500 shadow-[0_0_10px_#3b82f6]" style="width: 100%"></div>
+                            </div>
+                        </div>
+
+                        <button onclick="openAction('admit', 'BUET')"
+                            class="px-6 py-2 rounded-xl bg-blue-600 text-xs font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-900/40">Download
+                            Admit</button>
+                    </div>
+                </div>
+
+                <div class="fancy-card p-6 border-l-4 border-l-red-500 opacity-80">
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-14 h-14 bg-red-500/10 rounded-2xl flex items-center justify-center text-red-500 font-black text-xl border border-red-500/20">
+                                M</div>
+                            <div>
+                                <h4 class="text-white font-extrabold text-lg">Medical (MBBS)</h4>
+                                <p
+                                    class="text-[10px] text-red-500 uppercase font-bold tracking-widest font-black italic">
+                                    Payment Required</p>
+                            </div>
+                        </div>
+
+                        <div class="flex-grow max-w-sm w-full px-4">
+                            <div
+                                class="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-2 text-red-500">
+                                <span>Drafted</span>
+                                <span class="text-slate-700">Payment</span>
+                                <span class="text-slate-700">Finalized</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-red-500" style="width: 33%"></div>
+                            </div>
+                        </div>
+
+                        <button onclick="openAction('pay', 'Medical')"
+                            class="px-6 py-2 rounded-xl bg-red-600 text-white text-xs font-bold hover:bg-red-700 transition animate-pulse">Pay
+                            Fee Now</button>
+                    </div>
+                </div>
+                <div class="fancy-card p-6 border-l-4 border-l-purple-500 bg-slate-900/40">
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-500 font-black text-xl border border-purple-500/20">
+                                GS</div>
+                            <div>
+                                <h4 class="text-white font-extrabold text-lg">GST Cluster (24 Integrated Uni)</h4>
+                                <p class="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Unit A •
+                                    Science</p>
+                            </div>
+                        </div>
+
+                        <div class="flex-grow max-w-sm w-full px-4 text-center md:text-left">
+                            <div class="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-2">
+                                <span class="text-blue-500">Applied</span>
+                                <span class="text-blue-500">Paid</span>
+                                <span class="text-slate-600">Exam Date: 05 June</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-purple-500 shadow-[0_0_10px_#a855f7]" style="width: 66%"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-3">
+                            <button onclick="openAction('view', 'GST Cluster')"
+                                class="px-5 py-2 rounded-xl bg-slate-800 text-xs font-bold hover:bg-slate-700 transition">View
+                                Details</button>
+                            <button onclick="openAction('status', 'GST Cluster')"
+                                class="px-5 py-2 rounded-xl bg-purple-600 text-xs font-bold hover:bg-purple-700 transition">Exam
+                                Info</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fancy-card p-6 border-l-4 border-l-yellow-500 bg-slate-900/40">
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-14 h-14 bg-yellow-500/10 rounded-2xl flex items-center justify-center text-yellow-500 font-black text-xl border border-yellow-500/20">
+                                RU</div>
+                            <div>
+                                <h4 class="text-white font-extrabold text-lg">Rajshahi University</h4>
+                                <p
+                                    class="text-[10px] text-yellow-500 uppercase font-bold tracking-widest font-black italic">
+                                    Waitlist: #142 (Unit C)</p>
+                            </div>
+                        </div>
+
+                        <div class="flex-grow max-w-sm w-full px-4">
+                            <div
+                                class="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-2 text-yellow-500">
+                                <span>Exam Done</span>
+                                <span>Result Out</span>
+                                <span class="text-blue-400">Migration Active</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-yellow-500 shadow-[0_0_10px_#eab308]" style="width: 90%"></div>
+                            </div>
+                        </div>
+
+                        <button onclick="openAction('status', 'Rajshahi University')"
+                            class="px-6 py-2 rounded-xl bg-yellow-600 text-white text-xs font-bold hover:bg-yellow-700 transition">Check
+                            Position</button>
+                    </div>
+                </div>
+
+                <div class="fancy-card p-6 border-l-4 border-l-emerald-500 bg-slate-900/40">
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 font-black text-xl border border-emerald-500/20">
+                                CU</div>
+                            <div>
+                                <h4 class="text-white font-extrabold text-lg">Chittagong University</h4>
+                                <p class="text-[10px] text-slate-500 uppercase font-bold tracking-widest font-black">
+                                    Draft Application</p>
+                            </div>
+                        </div>
+
+                        <div class="flex-grow max-w-sm w-full px-4">
+                            <div
+                                class="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-2 text-emerald-500">
+                                <span>Personal Info</span>
+                                <span class="text-slate-700">Payment</span>
+                                <span class="text-slate-700">Complete</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-emerald-500 shadow-[0_0_10px_#10b981]" style="width: 33%"></div>
+                            </div>
+                        </div>
+
+                        <button onclick="openAction('pay', 'Chittagong University')"
+                            class="px-6 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-700 transition">Continue</button>
+                    </div>
+                </div>
+
+                <div class="fancy-card p-6 border-l-4 border-l-cyan-400 bg-slate-900/40 hover:shadow-[0_0_20px_rgba(34,211,238,0.2)]">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="flex items-center gap-4">
+            <div class="w-14 h-14 bg-cyan-400/10 rounded-2xl flex items-center justify-center text-cyan-400 font-black text-xl border border-cyan-400/20 shadow-[0_0_10px_rgba(34,211,238,0.1)]">R</div>
+            <div>
+                <h4 class="text-white font-extrabold text-lg tracking-tight">RUET</h4>
+                <div class="flex items-center gap-1.5">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                    </span>
+                    <p class="text-[10px] text-cyan-400 uppercase font-black tracking-widest">Verification Success</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-grow max-w-sm w-full px-4">
+            <div class="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-2 text-cyan-400/60">
+                <span>Applied</span>
+                <span>Verified</span>
+                <span class="text-white">Admit in June</span>
+            </div>
+            <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full bg-cyan-400 shadow-[0_0_15px_#22d3ee]" style="width: 66%"></div>
+            </div>
+        </div>
+
+        <button onclick="openAction('status', 'RUET')" class="px-6 py-2 rounded-xl bg-cyan-600 text-white text-xs font-black hover:bg-cyan-500 hover:scale-105 transition-all shadow-lg shadow-cyan-900/40">View Status</button>
+    </div>
+</div>
+
+<div class="fancy-card p-6 border-l-4 border-l-indigo-500 bg-slate-900/40 hover:shadow-[0_0_20px_rgba(99,102,241,0.2)]">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="flex items-center gap-4">
+            <div class="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center text-indigo-500 font-black text-xl border border-indigo-500/20 shadow-[0_0_10px_rgba(99,102,241,0.1)]">K</div>
+            <div>
+                <h4 class="text-white font-extrabold text-lg tracking-tight">KUET</h4>
+                <p class="text-[10px] text-indigo-400 uppercase font-black tracking-widest animate-pulse">Waiting for Payment</p>
+            </div>
+        </div>
+
+        <div class="flex-grow max-w-sm w-full px-4 text-center md:text-left">
+            <div class="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-2">
+                <span class="text-indigo-500">Form Filed</span>
+                <span class="text-slate-500">Payment</span>
+                <span class="text-slate-500">Confirmed</span>
+            </div>
+            <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full bg-indigo-500 shadow-[0_0_15px_#6366f1]" style="width: 33%"></div>
+            </div>
+        </div>
+
+        <button onclick="openAction('pay', 'KUET')" class="px-6 py-2 rounded-xl bg-indigo-600 text-white text-xs font-black hover:bg-indigo-500 hover:scale-105 transition-all shadow-lg shadow-indigo-900/40">Complete Pay</button>
+    </div>
+</div>
+
+<div class="fancy-card p-6 border-l-4 border-l-fuchsia-500 bg-slate-900/40 hover:shadow-[0_0_20px_rgba(217,70,239,0.2)]">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="flex items-center gap-4">
+            <div class="w-14 h-14 bg-fuchsia-500/10 rounded-2xl flex items-center justify-center text-fuchsia-500 font-black text-xl border border-fuchsia-500/20 shadow-[0_0_10px_rgba(217,70,239,0.1)]">C</div>
+            <div>
+                <h4 class="text-white font-extrabold text-lg tracking-tight">CUET</h4>
+                <p class="text-[10px] text-fuchsia-400 uppercase font-black tracking-widest">Admit Card Ready</p>
+            </div>
+        </div>
+
+        <div class="flex-grow max-w-sm w-full px-4">
+            <div class="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-2 text-fuchsia-400">
+                <span>Applied</span>
+                <span>Verified</span>
+                <span>Finalized</span>
+            </div>
+            <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full bg-fuchsia-500 shadow-[0_0_15px_#d946ef]" style="width: 100%"></div>
+            </div>
+        </div>
+
+        <button onclick="openAction('admit', 'CUET')" class="px-6 py-2 rounded-xl bg-fuchsia-600 text-white text-xs font-black hover:bg-fuchsia-500 hover:scale-105 transition-all shadow-lg shadow-fuchsia-900/40">Get Admit</button>
+    </div>
+</div>
+            </div>
+        </div>
+        <footer class="mt-20 border-t border-slate-800 pt-10 pb-6 text-center">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-8 text-left">
+                <div class="max-w-xs">
+                    <h3 class="text-lg font-black text-white mb-2">UniAid <span class="text-blue-500">BD</span></h3>
+                    <p class="text-xs text-slate-500 leading-relaxed">The ultimate admission companion for Bangladeshi
+                        students. Automating your journey from form fill-up to final result.</p>
+                </div>
+                <div class="flex gap-10">
+                    <div>
+                        <h4 class="text-xs font-black text-white uppercase mb-3 tracking-widest">Navigation</h4>
+                        <ul class="text-[10px] text-slate-500 space-y-2 uppercase font-bold">
+                            <li><a href="#" class="hover:text-blue-500">Support</a></li>
+                            <li><a href="#" class="hover:text-blue-500">Policy</a></li>
+                        </ul>
+                    </div>
+                    <div class="text-right">
+                        <h4 class="text-xs font-black text-white uppercase mb-3 tracking-widest">Contact</h4>
+                        <p class="text-[10px] text-slate-500 uppercase font-bold">support@uniaid.com.bd</p>
+                    </div>
+                </div>
+            </div>
+            <p class="text-[10px] text-slate-600 font-bold uppercase tracking-[0.3em] border-t border-slate-900 pt-6">©
+                2026 UniAid BD • Engineered for Success</p>
+        </footer>
+    </main>
+
+    <div id="actionModal"
+        class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-6">
+        <div class="fancy-card w-full max-w-md p-8 border-2 border-blue-500 shadow-[0_0_50px_rgba(59,130,246,0.3)]">
+            <h3 id="modalHeader" class="text-2xl font-black text-white mb-4">Action Required</h3>
+            <div id="modalContent" class="text-slate-300 text-sm mb-8 space-y-4">
+            </div>
+            <div class="flex gap-4">
+                <button onclick="closeModal()"
+                    class="flex-1 py-3 rounded-xl bg-slate-800 font-bold hover:bg-slate-700 transition">Back</button>
+                <button id="mainActionBtn"
+                    class="flex-1 py-3 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openAction(type, uni) {
+            const modal = document.getElementById('actionModal');
+            const header = document.getElementById('modalHeader');
+            const content = document.getElementById('modalContent');
+            const btn = document.getElementById('mainActionBtn');
+
+            modal.classList.remove('hidden');
+
+            if (type === 'admit') {
+                header.innerText = "Download Admit: " + uni;
+                content.innerHTML = `<p>Your admit card for ${uni} is ready. Please download and print the color copy.</p><div class='p-4 bg-slate-800 rounded-xl border border-slate-700 text-xs text-blue-400'>Roll: 102931 • Center: Dhaka University Area</div>`;
+                btn.innerText = "Download PDF";
+            } else if (type === 'pay') {
+                header.innerText = "Payment Portal: " + uni;
+                content.innerHTML = `<p>Amount to be paid: <strong>1200 BDT</strong></p><p>Please select your gateway:</p><div class='grid grid-cols-2 gap-2'><button class='p-3 bg-pink-600 rounded-xl font-bold'>bkash</button><button class='p-3 bg-orange-600 rounded-xl font-bold'>Nagad</button></div>`;
+                btn.innerText = "Proceed";
+            } else {
+                header.innerText = "Status: " + uni;
+                content.innerHTML = `<p>Your application is under review. Please check back after 48 hours for final verification.</p>`;
+                btn.innerText = "Okay";
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('actionModal').classList.add('hidden');
+        }
+    </script>
+</body>
+
+</html>

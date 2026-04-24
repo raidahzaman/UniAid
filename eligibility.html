@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Eligibility Checker | UniAid BD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #030712;
+        }
+
+        /* Neon Glow Background */
+        .glow-bg {
+            background-image: radial-gradient(circle at top left, #1d4ed8 0%, transparent 20%),
+                radial-gradient(circle at bottom right, #db2777 0%, transparent 20%);
+            background-attachment: fixed;
+        }
+
+        .fancy-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        /* Input Styling Override */
+        input,
+        select {
+            background-color: #0f172a !important;
+            border: 1px solid #334155 !important;
+            color: white !important;
+            transition: all 0.3s ease !important;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #3b82f6 !important;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3) !important;
+            outline: none;
+        }
+
+        .btn-neon {
+            background: linear-gradient(90deg, #2563eb, #3b82f6);
+            box-shadow: 0 10px 20px -10px rgba(59, 130, 246, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .btn-neon:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px -10px rgba(59, 130, 246, 0.7);
+        }
+
+        /* Result Entry Animation */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: slideUp 0.4s ease forwards;
+        }
+    </style>
+</head>
+
+<body class="text-slate-200 flex h-screen overflow-hidden glow-bg">
+
+    <aside class="w-64 flex flex-col border-r border-slate-800 bg-slate-900/50 backdrop-blur-xl">
+        <div class="p-8 text-2xl font-black text-white border-b border-slate-800">
+            Uni<span class="text-blue-500 font-extrabold text-3xl">Aid</span>
+        </div>
+        <nav class="flex-grow p-5 space-y-3 mt-4">
+            <a href="dashboard.html" class="nav-link active block p-3 rounded-xl font-semibold transition">Dashboard</a>
+            <a href="eligibility.html"
+                class="nav-link block p-3 rounded-xl text-slate-500 hover:text-white hover:bg-slate-800 transition">Eligibility
+                Checker</a>
+            <a href="calender.html"
+                class="nav-link block p-3 rounded-lg text-slate-500 hover:text-white hover:bg-slate-800 transition">Admission
+                Calendar</a>
+            <a href="my_application.html"
+                class="nav-link block p-3 rounded-lg text-slate-500 hover:text-white hover:bg-slate-800 transition">My
+                Applications</a>
+            <a href="gpa.html"
+                class="nav-link block p-3 rounded-lg text-slate-500 hover:text-white hover:bg-slate-800 transition">GPA
+                Calculators</a>
+        </nav>
+        <div class="p-6 border-t border-slate-800 text-center">
+            <a href="index.html" class="text-red-400 font-bold text-sm hover:underline">Log Out</a>
+        </div>
+    </aside>
+
+    <main class="flex-grow overflow-y-auto p-8 md:p-12">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4 bg-slate-900/40 p-4 rounded-2xl border border-slate-800 backdrop-blur-md">
+    <div class="relative w-full md:w-96">
+        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        </span>
+        <input type="text" placeholder="Search for universities, exams..." class="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-sm focus:border-blue-500 outline-none transition text-white">
+    </div>
+    
+    <div class="flex items-center gap-6">
+        <div class="flex items-center gap-4">
+            <button onclick="toggleTheme()" class="p-2.5 rounded-xl bg-slate-900/50 border border-slate-700 text-slate-400 hover:text-white transition-all">
+                <svg id="theme-moon" class="h-5 w-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                <svg id="theme-sun" class="h-5 w-5 hidden dark:block text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707.707M12 8a4 4 0 100 8 4 4 0 000-8z" /></svg>
+            </button>
+            <button class="relative text-slate-400 hover:text-white transition">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                <span class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full border-2 border-slate-900"></span>
+            </button>
+        </div>
+        <div class="h-8 w-[1px] bg-slate-800 hidden md:block"></div>
+        <a href="profile.html" class="flex items-center gap-3">
+            <div class="text-right hidden md:block">
+                <p class="text-xs font-black text-white leading-none">Shakil Ahmed</p>
+                <p class="text-[10px] text-blue-500 font-bold uppercase tracking-tighter mt-1">Gold Member</p>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center font-black text-white border-2 border-blue-400/20">S</div>
+        </a>
+    </div>
+</header>
+        <div class="max-w-4xl mx-auto">
+
+            <header class="mb-12 text-center md:text-left">
+                <h1 class="text-4xl font-black text-white tracking-tight">Smart <span
+                        class="text-blue-500">Eligibility</span> Checker</h1>
+                <p class="text-slate-400 mt-2 text-lg">Cross-check your results with 50+ university criteria instantly.
+                </p>
+            </header>
+            <div class="space-y-6">
+                <div class="mb-6">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-500">Select Your
+                        Group</label>
+                    <select id="student_group"
+                        class="w-full bg-slate-950 border border-slate-700 p-3 rounded-xl mt-2 text-white outline-none focus:border-blue-500 transition">
+                        <option value="science">Science</option>
+                        <option value="arts">Arts</option>
+                        <option value="commerce">Commerce</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-500">SSC GPA</label>
+                    <input type="number" id="ssc_gpa" step="0.01"
+                        class="w-full bg-slate-950 border border-slate-700 p-3 rounded-xl mt-2 text-white outline-none focus:border-blue-500 transition">
+                </div>
+
+                <div>
+                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-500">HSC GPA</label>
+                    <input type="number" id="hsc_gpa" step="0.01"
+                        class="w-full bg-slate-950 border border-slate-700 p-3 rounded-xl mt-2 text-white outline-none focus:border-blue-500 transition">
+                </div>
+
+                <div class="grid grid-cols-3 gap-4">
+                    <input type="number" id="physics" placeholder="Phy"
+                        class="bg-slate-950 border border-slate-700 p-3 rounded-xl text-white outline-none focus:border-blue-500 text-center">
+                    <input type="number" id="chemistry" placeholder="Chem"
+                        class="bg-slate-950 border border-slate-700 p-3 rounded-xl text-white outline-none focus:border-blue-500 text-center">
+                    <input type="number" id="math" placeholder="Math"
+                        class="bg-slate-950 border border-slate-700 p-3 rounded-xl text-white outline-none focus:border-blue-500 text-center">
+                </div>
+
+                <button onclick="checkEligibility()"
+                    class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-black rounded-2xl uppercase tracking-[0.2em] shadow-lg shadow-blue-900/40 transition">
+                    Calculate Eligibility
+                </button>
+            </div>
+
+            <div id="result_area" class="mt-12 space-y-4 hidden">
+            </div>
+
+
+            <div id="results-box" class="hidden">
+                <div class="flex items-center justify-between mb-8 border-b border-slate-800 pb-4">
+                    <h3 class="text-xl font-black text-white uppercase tracking-tighter">Available Opportunities</h3>
+                    <span
+                        class="bg-blue-500/10 text-blue-400 text-[10px] font-black px-3 py-1 rounded-full border border-blue-500/20">LIVE
+                        DATA</span>
+                </div>
+                <div id="results-grid" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                </div>
+            </div>
+
+            <div id="empty-state"
+                class="text-center py-24 bg-slate-900/20 border-2 border-dashed border-slate-800 rounded-3xl">
+                <div class="text-6xl mb-4 opacity-20">📊</div>
+                <p class="text-slate-500 font-medium">Ready to see your future? <br>Enter your GPA and click analyze.
+                </p>
+            </div>
+        </div>
+<footer class="mt-20 border-t border-slate-800 pt-10 pb-6 text-center">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-8 text-left">
+                <div class="max-w-xs">
+                    <h3 class="text-lg font-black text-white mb-2">UniAid <span class="text-blue-500">BD</span></h3>
+                    <p class="text-xs text-slate-500 leading-relaxed">The ultimate admission companion for Bangladeshi
+                        students. Automating your journey from form fill-up to final result.</p>
+                </div>
+                <div class="flex gap-10">
+                    <div>
+                        <h4 class="text-xs font-black text-white uppercase mb-3 tracking-widest">Navigation</h4>
+                        <ul class="text-[10px] text-slate-500 space-y-2 uppercase font-bold">
+                            <li><a href="#" class="hover:text-blue-500">Support</a></li>
+                            <li><a href="#" class="hover:text-blue-500">Policy</a></li>
+                        </ul>
+                    </div>
+                    <div class="text-right">
+                        <h4 class="text-xs font-black text-white uppercase mb-3 tracking-widest">Contact</h4>
+                        <p class="text-[10px] text-slate-500 uppercase font-bold">support@uniaid.com.bd</p>
+                    </div>
+                </div>
+            </div>
+            <p class="text-[10px] text-slate-600 font-bold uppercase tracking-[0.3em] border-t border-slate-900 pt-6">©
+                2026 UniAid BD • Engineered for Success</p>
+        </footer>
+    </main>
+
+    <script>
+        function runChecker() {
+            const ssc = parseFloat(document.getElementById('ssc_gpa').value);
+            const hsc = parseFloat(document.getElementById('hsc_gpa').value);
+            const group = document.getElementById('student_group').value;
+            const total = ssc + hsc;
+
+            if (isNaN(ssc) || isNaN(hsc)) {
+                alert("Please enter valid GPA scores.");
+                return;
+            }
+
+            const resultsBox = document.getElementById('results-box');
+            const resultsGrid = document.getElementById('results-grid');
+            const emptyState = document.getElementById('empty-state');
+
+            resultsGrid.innerHTML = '';
+            resultsBox.classList.remove('hidden');
+            emptyState.classList.add('hidden');
+
+            const units = [
+                { name: "BUET (Eng & Arch)", req: 10.0, group: "science", color: "border-blue-500", icon: "B" },
+                { name: "Medical (MBBS/BDS)", req: 9.0, group: "science", color: "border-red-500", icon: "M" },
+                { name: "Dhaka University (A Unit)", req: 8.0, group: "science", color: "border-orange-500", icon: "DU" },
+                { name: "CKRUET (Engineering)", req: 10.0, group: "science", color: "border-cyan-400", icon: "CK" },
+                { name: "GST Cluster (A Unit)", req: 8.0, group: "science", color: "border-purple-500", icon: "GS" },
+                { name: "GST Cluster (B Unit)", req: 6.0, group: "arts", color: "border-purple-500", icon: "GS" },
+                { name: "GST Cluster (C Unit)", req: 6.5, group: "commerce", color: "border-purple-500", icon: "GS" },
+                { name: "Rajshahi Uni (Unit A)", req: 7.0, group: "arts", color: "border-yellow-500", icon: "RU" },
+                { name: "Rajshahi Uni (Unit C)", req: 8.0, group: "science", color: "border-yellow-500", icon: "RU" }
+            ];
+
+            let found = 0;
+            units.forEach((uni, index) => {
+                if ((uni.group === group) && (total >= uni.req)) {
+                    found++;
+                    resultsGrid.innerHTML += `
+                        <div class="fancy-card border-l-8 ${uni.color} p-6 flex items-center justify-between animate-fade-in hover:scale-[1.02]" style="animation-delay: ${index * 0.1}s">
+                            <div class="flex items-center space-x-5">
+                                <div class="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center font-black text-lg text-white border border-slate-700 shadow-inner">${uni.icon}</div>
+                                <div>
+                                    <h4 class="text-white font-black text-md leading-tight">${uni.name}</h4>
+                                    <p class="text-[10px] text-slate-500 font-bold uppercase mt-1">Threshold: ${uni.req} GPA</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="bg-green-500/10 text-green-500 text-[10px] font-black px-3 py-1 rounded-full border border-green-500/20 shadow-[0_0_10px_rgba(34,197,94,0.2)]">ELIGIBLE</span>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            if (found === 0) {
+                resultsGrid.innerHTML = `<div class="col-span-2 text-center text-slate-500 p-16 bg-slate-900/50 rounded-3xl border border-dashed border-slate-800">No universities match your GPA and group criteria.</div>`;
+            }
+        }
+    </script>
+    <script>
+        function checkEligibility() {
+            // Input value gulo collect kora
+            const ssc = parseFloat(document.getElementById('ssc_gpa').value) || 0;
+            const hsc = parseFloat(document.getElementById('hsc_gpa').value) || 0;
+            const phy = parseInt(document.getElementById('physics').value) || 0;
+            const chem = parseInt(document.getElementById('chemistry').value) || 0;
+            const math = parseInt(document.getElementById('math').value) || 0;
+
+            // NEW: Get selected group
+            const selectedGroup = document.getElementById('student_group').value;
+
+            const resultArea = document.getElementById('result_area');
+            resultArea.classList.remove('hidden'); // Result box-ta show kora
+            resultArea.innerHTML = '<h3 class="text-xl font-black mb-6 uppercase tracking-tighter text-white">Eligibility Report</h3>';
+
+            // Real University Criteria (YOUR EXACT DATA)
+            const unis = [
+                {
+                    name: 'BUET (Engineering)',
+                    group: 'science',
+                    eligible: (ssc === 5.0 && hsc === 5.0),
+                    note: 'Req: SSC 5.0, HSC 5.0 , Total GPA 10.0 minimum'
+                },
+                {
+                    name: 'RUET (Engineering)',
+                    group: 'science',
+                    eligible: (ssc === 5.0 && hsc === 5.0),
+                    note: 'Req: SSC 5.0, HSC 5.0 , Total GPA 10.0 minimum'
+                },
+                {
+                    name: 'CUET (Engineering)',
+                    group: 'science',
+                    eligible: (ssc === 5.0 && hsc === 5.0),
+                    note: 'Req: SSC 5.0, HSC 5.0 , Total GPA 10.0 minimum'
+                },
+                {
+                    name: 'KUET (Engineering)',
+                    group: 'science',
+                    eligible: (ssc === 5.0 && hsc === 5.0),
+                    note: 'Req: SSC 5.0, HSC 5.0 , Total GPA 10.0 minimum'
+                },
+                {
+                    name: 'Medical (MBBS)',
+                    group: 'science',
+                    eligible: (ssc + hsc >= 9.0),
+                    note: 'Req: Total GPA 9.0 minimum'
+                },
+                {
+                    name: 'Dhaka University (A)',
+                    group: 'science',
+                    eligible: (ssc + hsc >= 8.0),
+                    note: 'Req: Total GPA 8.0 minimum'
+                },
+                {
+                    name: 'Rajshahi University (A) - Arts',
+                    group: 'arts',
+                    eligible: (ssc + hsc >= 7.0),
+                    note: 'Req: Total GPA 7.0 minimum'
+                },
+                {
+                    name: 'Rajshahi University (C) - Science',
+                    group: 'science',
+                    eligible: (ssc + hsc >= 8.0),
+                    note: 'Req: Total GPA 8.0 minimum'
+                },
+                {
+                    name: 'GST Cluster University (A) - Science',
+                    group: 'science',
+                    eligible: (ssc + hsc >= 8.0),
+                    note: 'Req: Total GPA 8.0 minimum'
+                },
+                {
+                    name: 'GST Cluster University (B) - Arts',
+                    group: 'arts',
+                    eligible: (ssc + hsc >= 6.0),
+                    note: 'Req: Total GPA 6.0 minimum'
+                },
+                {
+                    name: 'GST Cluster University (A) - Commerce',
+                    group: 'commerce',
+                    eligible: (ssc + hsc >= 6.5),
+                    note: 'Req: Total GPA 6.5 minimum'
+                }
+            ];
+
+            // FILTER LOGIC: Only show unis matching the selected group
+            const filteredUnis = unis.filter(uni => uni.group === selectedGroup);
+
+            // Result card gulo banano (YOUR EXACT FORMATTING)
+            filteredUnis.forEach(uni => {
+                const colorClass = uni.eligible ? 'text-green-500 border-green-500/20 bg-green-500/5' : 'text-red-500 border-red-500/20 bg-red-500/5';
+                const statusText = uni.eligible ? '✅ Eligible' : '❌ Not Eligible';
+
+                resultArea.innerHTML += `
+            <div class="fancy-card p-6 border-l-4 ${colorClass} flex justify-between items-center">
+                <div>
+                    <h5 class="font-black text-white text-sm uppercase tracking-tight">${uni.name}</h5>
+                    <p class="text-[9px] text-slate-500 font-bold uppercase mt-1">${uni.note}</p>
+                </div>
+                <span class="text-xs font-black uppercase tracking-widest">${statusText}</span>
+            </div>
+        `;
+            });
+
+            // Smooth Scroll to Result
+            resultArea.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+
+</html>

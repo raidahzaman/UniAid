@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniAid Bangladesh | University Admission Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; }
+        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        .btn-primary { background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%); transition: all 0.3s ease; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.5); }
+    </style>
+</head>
+<body class="text-slate-200 min-h-screen flex flex-col">
+
+    <nav class="p-6 flex justify-between items-center max-w-7xl mx-auto w-full">
+        <div class="text-2xl font-bold tracking-tighter text-white">
+            <span class="text-blue-500">Uni</span>Aid<span class="text-xs font-light ml-1 text-slate-400">BD</span>
+        </div>
+        <div class="space-x-6 text-sm font-medium hidden md:block">
+            <a href="#" class="hover:text-blue-400 transition">Circulars</a>
+            <a href="#" class="hover:text-blue-400 transition">GPA Calculator</a>
+            <a href="help_desk.html" class="hover:text-blue-400 transition">Help Desk</a>
+        </div>
+    </nav>
+<div class="relative max-w-6xl mx-auto h-[450px] overflow-hidden rounded-[2.5rem] border border-slate-800 shadow-2xl group">
+    
+    <div id="slider" class="flex h-full transition-transform duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)]" style="width: 300%;">
+        
+        <div class="w-1/3 h-full relative">
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-transparent z-10"></div>
+            <img src="https://images.unsplash.com/photo-1523050335392-93851179ae22?q=80&w=1200" class="w-full h-full object-cover" alt="Campus">
+            <div class="absolute inset-0 z-20 flex flex-col justify-center px-16">
+                <span class="text-blue-400 font-black text-xs uppercase tracking-[0.4em] mb-4">Welcome to UniAid</span>
+                <h2 class="text-6xl font-black text-white italic leading-none tracking-tighter">FUTURE <br> <span class="text-blue-500">ENGINEERS</span></h2>
+                <p class="text-slate-300 mt-6 max-w-md font-medium">Join 50,000+ students tracking their dream university admissions in real-time.</p>
+            </div>
+        </div>
+
+        <div class="w-1/3 h-full relative">
+            <div class="absolute inset-0 bg-gradient-to-r from-purple-900/80 to-transparent z-10"></div>
+            <img src="https://images.unsplash.com/photo-1541339907198-e08756ebafe3?q=80&w=1200" class="w-full h-full object-cover" alt="Library">
+            <div class="absolute inset-0 z-20 flex flex-col justify-center px-16">
+                <span class="text-purple-400 font-black text-xs uppercase tracking-[0.4em] mb-4">Live Updates</span>
+                <h2 class="text-6xl font-black text-white italic leading-none tracking-tighter">SMART <br> <span class="text-purple-500">TRACKING</span></h2>
+                <p class="text-slate-300 mt-6 max-w-md font-medium">Get instant notifications for BUET, DU, and Medical circulars the moment they drop.</p>
+            </div>
+        </div>
+
+        <div class="w-1/3 h-full relative">
+            <div class="absolute inset-0 bg-gradient-to-r from-cyan-900/80 to-transparent z-10"></div>
+            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1200" class="w-full h-full object-cover" alt="Coding">
+            <div class="absolute inset-0 z-20 flex flex-col justify-center px-16">
+                <span class="text-cyan-400 font-black text-xs uppercase tracking-[0.4em] mb-4">GPA Analytics</span>
+                <h2 class="text-6xl font-black text-white italic leading-none tracking-tighter">INSTANT <br> <span class="text-cyan-400">ELIGIBILITY</span></h2>
+                <p class="text-slate-300 mt-6 max-w-md font-medium">Calculate your admission chances for all top-tier universities with a single click.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="absolute bottom-8 left-16 z-30 flex gap-4">
+        <button onclick="moveSlide(0)" class="dot w-12 h-1.5 bg-white/20 rounded-full transition-all duration-300 overflow-hidden relative">
+            <div class="dot-progress absolute left-0 top-0 h-full bg-blue-500 w-0"></div>
+        </button>
+        <button onclick="moveSlide(1)" class="dot w-12 h-1.5 bg-white/20 rounded-full transition-all duration-300 overflow-hidden relative">
+            <div class="dot-progress absolute left-0 top-0 h-full bg-blue-500 w-0"></div>
+        </button>
+        <button onclick="moveSlide(2)" class="dot w-12 h-1.5 bg-white/20 rounded-full transition-all duration-300 overflow-hidden relative">
+            <div class="dot-progress absolute left-0 top-0 h-full bg-blue-500 w-0"></div>
+        </button>
+    </div>
+</div>
+<div class="overflow-hidden rounded-[2.5rem] mb-5 shadow-2xl group">
+    </div>
+<script>
+    let currentSlide = 0;
+    const slider = document.getElementById('slider');
+    const dotProgressBars = document.querySelectorAll('.dot-progress');
+
+    function moveSlide(index) {
+        currentSlide = index;
+        // Correct transform for 3 slides (0%, -33.33%, -66.66%)
+        slider.style.transform = `translateX(-${index * 33.3333}%)`;
+        
+        // Update progress bars
+        dotProgressBars.forEach((bar, i) => {
+            bar.style.width = i === index ? '100%' : '0%';
+            bar.style.transition = i === index ? 'width 5s linear' : 'none';
+        });
+    }
+
+    // Auto-play logic
+    function autoPlay() {
+        moveSlide(currentSlide);
+        currentSlide = (currentSlide + 1) % 3;
+        setTimeout(autoPlay, 5000); // Change every 5 seconds
+    }
+
+    // Initialize
+    window.onload = () => {
+        autoPlay();
+    };
+</script>
+
+    <main class="flex-grow flex items-center px-6">
+        <div class="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-center">
+            
+            <div class="space-y-6">
+                <h1 class="text-5xl md:text-6xl font-extrabold text-white leading-tight">
+                    Your Gateway to <br><span class="text-blue-500">Public Universities.</span>
+                </h1>
+                <p class="text-slate-400 text-lg max-w-md">
+                    Centralized admission tracking, automated eligibility checking, and real-time result alerts for Bangladeshi students.
+                </p>
+                <div class="flex items-center space-x-4 text-sm text-slate-500">
+                    <span>✓ 50+ Universities</span>
+                    <span>✓ Live Updates</span>
+                    <span>✓ No Ads</span>
+                </div>
+            </div>
+
+            <div class="glass-card p-8 rounded-2xl shadow-2xl max-w-md w-full ml-auto">
+                <div class="flex mb-8 border-b border-slate-700">
+                    <button id="loginTab" class="pb-3 px-4 text-blue-500 border-b-2 border-blue-500 font-semibold" onclick="toggleAuth('login')">Login</button>
+                    <button id="registerTab" class="pb-3 px-4 text-slate-400 hover:text-white transition" onclick="toggleAuth('register')">Register</button>
+                </div>
+
+                <form id="loginForm" class="space-y-4" onsubmit="handleLogin(event)">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider mb-2 text-slate-400">Email Address</label>
+                        <input type="email" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 focus:outline-none focus:border-blue-500 transition text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider mb-2 text-slate-400">Password</label>
+                        <input type="password" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 focus:outline-none focus:border-blue-500 transition text-white">
+                    </div>
+                    <button type="submit" class="w-full btn-primary py-3 rounded-lg font-bold text-white mt-4">Enter Dashboard</button>
+                    <p class="text-center text-xs text-slate-500 mt-4">Forgot password? <a href="#" class="text-blue-400">Reset here</a></p>
+                </form>
+
+                <form id="registerForm" class="space-y-4 hidden">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Full Name</label>
+                            <input type="text" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">HSC Roll</label>
+                            <input type="text" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Email</label>
+                        <input type="email" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Password</label>
+                        <input type="password" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white">
+                    </div>
+                    <button type="button" class="w-full btn-primary py-3 rounded-lg font-bold text-white mt-4">Create Account</button>
+                </form>
+            </div>
+        </div>
+        
+    </main>
+
+    <footer class="p-8 text-center text-slate-600 text-sm">
+        &copy; 2026 UniAid Bangladesh. All rights reserved.
+    </footer>
+
+    <script>
+        function toggleAuth(type) {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const loginTab = document.getElementById('loginTab');
+            const registerTab = document.getElementById('registerTab');
+
+            if (type === 'login') {
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+                loginTab.classList.add('text-blue-500', 'border-blue-500');
+                registerTab.classList.remove('text-blue-500', 'border-blue-500');
+            } else {
+                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden');
+                registerTab.classList.add('text-blue-500', 'border-blue-500');
+                loginTab.classList.remove('text-blue-500', 'border-blue-500');
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            // In a real app, you would validate credentials here.
+            // For now, we redirect to the dashboard.
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+</body>
+</html>
